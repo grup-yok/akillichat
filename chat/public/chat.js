@@ -23,14 +23,14 @@ $(document).ready(function(){
 
 
         if(question.val() !== undefined){    
-            usertmp.html(question.val());
-            messages.append("Soru: "+question.val());
+            usertmp.html("Soru: "+question.val());
+            messages.append(usertmp);
         }
 
         window.sendMessageToBackend(question.val(), function(data){
             if(data){
-                bottmp.html(data.message);
-                messages.append("Cevap: "+bottmp);
+                bottmp.html("Cevap: "+data.message);
+                messages.append(bottmp);
             }
         });
 
@@ -50,4 +50,45 @@ $(document).ready(function(){
         });
     };
 
+    window.textToSpeech = function(){
+        try {
+            var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            var recognition = new SpeechRecognition();
+        }
+        catch(e) {
+            
+        }
+
+        recognition.onstart = function() { 
+            console.log('Voice recognition activated. Try speaking into the microphone.');
+        }
+          
+        recognition.onspeechend = function() {
+            console.log('You were quiet for a while so voice recognition turned itself off.');
+        }
+          
+        recognition.onerror = function(event) {
+            if(event.error == 'no-speech') {
+                console.log('No speech was detected. Try again.');  
+            };
+        }
+
+        recognition.onresult = function(event) {
+
+            // event is a SpeechRecognitionEvent object.
+            // It holds all the lines we have captured so far. 
+            // We only need the current one.
+            var current = event.resultIndex;
+            
+            // Get a transcript of what was said.
+            var transcript = event.results[current][0].transcript;
+            
+            // Add the current transcript to the contents of our Note.
+            noteContent += transcript;
+            console.log(noteContent);
+
+        }
+        
+        return recognition;
+    }
 });
