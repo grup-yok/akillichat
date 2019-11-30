@@ -51,13 +51,19 @@ $(document).ready(function(){
     };
 
     window.textToSpeech = function(){
+        var noteContent = "";
         try {
             var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             var recognition = new SpeechRecognition();
         }
         catch(e) {
-            
+            console.log("Error:"+e);
         }
+
+        
+        recognition.lang = 'tr-TR';
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
 
         recognition.onstart = function() { 
             console.log('Voice recognition activated. Try speaking into the microphone.');
@@ -82,11 +88,18 @@ $(document).ready(function(){
             
             // Get a transcript of what was said.
             var transcript = event.results[current][0].transcript;
+            console.log(event);
             
             // Add the current transcript to the contents of our Note.
             noteContent += transcript;
             console.log(noteContent);
 
+            
+         $('#question').val(noteContent);
+        }
+
+        recognition.onstop = function(){
+            window.sendMessage();
         }
         
         return recognition;
