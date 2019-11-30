@@ -15,9 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from front import views
+from front import views as Front
+from backoffice import views as BackOffice
 
 urlpatterns = [
-    url(r'^$', views.index, name="home"),
+    url(r'^$', Front.index, name="home"),
+    url(r'^office/', BackOffice.index, name="backoffice"),
     url(r'^admin/', admin.site.urls),
 ]
