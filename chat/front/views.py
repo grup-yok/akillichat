@@ -10,6 +10,7 @@ from nltk.probability import FreqDist
 from nltk.util import bigrams, trigrams, ngrams
 from front.models import Request as req
 from front.models import Response as res
+from front.models import Dictionary as dic
 
 # Create your views here.
 def index(request):
@@ -21,9 +22,12 @@ def messageReceive(request):
     ms.save()
 
     AI_tokens = word_tokenize(message)
+
     fdist = FreqDist()
     for word in AI_tokens:
         fdist[word.lower()]+=1
+        wrd = dic.objects.create(word=word)
+        wrd.save()
     fdist
 
     biagram = list(nltk.bigrams(AI_tokens))

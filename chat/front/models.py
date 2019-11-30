@@ -9,4 +9,10 @@ class Request(models.Model):
 
 class Response(models.Model):
     text = models.CharField(max_length=1000)
+    request_id = models.IntegerField(default=0)
 
+class Dictionary(models.Model):
+    request_id = models.IntegerField(default=0)
+    count = models.IntegerField(default=0)
+    word = models.CharField(max_length=1000)
+    
