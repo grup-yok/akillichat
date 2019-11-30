@@ -47,16 +47,19 @@ def messageReceive(request):
             if rat >= 90:
                 response = x.text
 
+    if response == "":
+        response = googleSearch(message)
 
+    
     return JsonResponse({
         "message": response
     })
 
 def googleSearch(query):
     result = []
-    for i in search(query,        # The query you want to run
+    for i in search(query.encode('utf-8'),        # The query you want to run
                 tld = 'com',  # The top level domain
-                lang = 'en',  # The language
+                lang = 'tr',  # The language
                 num = 10,     # Number of results per page
                 start = 0,    # First result to retrieve
                 stop = None,  # Last result to retrieve

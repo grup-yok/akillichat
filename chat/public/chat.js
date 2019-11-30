@@ -23,13 +23,13 @@ $(document).ready(function(){
 
 
         if(question.val() !== undefined){    
-            usertmp.html("Soru: "+question.val());
+            usertmp.html("<span class='bold text-danger'>Soru: </span>"+question.val());
             messages.append(usertmp);
         }
 
         window.sendMessageToBackend(question.val(), function(data){
             if(data){
-                bottmp.html("Cevap: "+data.message);
+                bottmp.html("<span class='bold text-success'>Cevap: </span>"+data.message);
                 messages.append(bottmp);
             }
         });
