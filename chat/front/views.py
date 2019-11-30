@@ -52,14 +52,13 @@ def messageReceive(request):
     if response == "":
         response = googleSearch(message)
 
-        for s in response:
-            page = urllib.urlopen(s)
-            soup = BeautifulSoup(page, "html.parser")
-            title = soup.find_all("title")
-            title_get = title[0].contents[0].strip()
-            rat = fuzz.token_set_ratio(title_get, message)
-            if rat >= 40:
-                response = title_get
+        page = urllib.urlopen(response[0])
+        soup = BeautifulSoup(page, "html.parser")
+        title = soup.find_all("title")
+        title_get = title[0].contents[0].strip()
+        rat = fuzz.token_set_ratio(title_get, message)
+        if rat >= 40:
+            response = title_get
 
     
     return JsonResponse({
@@ -71,10 +70,10 @@ def googleSearch(query):
     for i in search(query.encode('utf-8'),        # The query you want to run
                 tld = 'com',  # The top level domain
                 lang = 'tr',  # The language
-                num = 10,     # Number of results per page
+                num = 1,     # Number of results per page
                 start = 0,    # First result to retrieve
                 stop = None,  # Last result to retrieve
-                pause = 2.0,  # Lapse between HTTP requests
+                pause = 1.0,  # Lapse between HTTP requests
                ):
         result.append(i)
     return result

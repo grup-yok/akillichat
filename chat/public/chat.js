@@ -21,6 +21,8 @@ $(document).ready(function(){
         var messages = $('.messages');
         var question = $('#question');
 
+        
+
 
         if(question.val() !== undefined){    
             usertmp.html("<span class='bold text-danger'>Soru: </span>"+question.val());
@@ -34,7 +36,7 @@ $(document).ready(function(){
             }
         });
 
-
+        question.val('');
     };
 
     
@@ -95,7 +97,7 @@ $(document).ready(function(){
             console.log(noteContent);
 
             
-         $('#question').val(noteContent);
+            $('#question').val(noteContent);
         }
 
         recognition.onstop = function(){
@@ -104,4 +106,14 @@ $(document).ready(function(){
         
         return recognition;
     }
+
+    window.checkKey = function (event) {
+        if (event.which == 13 || event.keyCode == 13) {
+            window.sendMessage();
+            return false;
+        }
+        return true;
+    };
+
+    $('#question').on('keypress', window.checkKey);
 });
