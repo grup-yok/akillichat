@@ -3,9 +3,9 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render
 from django.http import HttpResponse, HttpRequest, JsonResponse
-import nltk
+import nltk, string
 import nltk.corpus
-from nltk.tokenize import word_tokenize
+from nltk.tokenize import word_tokenize, sent_tokenize
 from nltk.probability import FreqDist
 from nltk.util import bigrams, trigrams, ngrams
 from front.models import Request as req
@@ -32,5 +32,5 @@ def messageReceive(request):
 
     biagram = list(nltk.bigrams(AI_tokens))
     return JsonResponse({
-        "message": biagram
+        "message": ""
     })
