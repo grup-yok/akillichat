@@ -6,8 +6,9 @@ from django.http import HttpResponse, HttpRequest, JsonResponse
 import nltk, string
 import nltk.corpus
 from nltk.tokenize import word_tokenize, sent_tokenize
-from nltk.probability import FreqDist
+#from nltk.probability import FreqDist
 from nltk.util import bigrams, trigrams, ngrams
+from fuzzywuzzy import fuzz
 from front.models import Request as req
 from front.models import Response as res
 from front.models import Dictionary as dic
@@ -23,14 +24,20 @@ def messageReceive(request):
 
     AI_tokens = word_tokenize(message)
 
-    fdist = FreqDist()
+    response = ""
+
     for word in AI_tokens:
-        fdist[word.lower()]+=1
         wrd = dic.objects.create(word=word)
         wrd.save()
-    fdist
 
-    biagram = list(nltk.bigrams(AI_tokens))
+        findreq = res.objects.filter(text__contains=word)
+        print(findreq)
+        for x in findreq:
+            rat = fuzz.token_set_ratio(x.text, word)
+            if rat >= 90:
+                response = x.text
+
+
     return JsonResponse({
-        "message": ""
+        "message": response
     })
