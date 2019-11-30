@@ -21,5 +21,6 @@ from backoffice import views as BackOffice
 urlpatterns = [
     url(r'^$', Front.index, name="home"),
     url(r'^office/', BackOffice.index, name="backoffice"),
+    url(r'^api/ask', Front.messageReceive, name="ask"),
     url(r'^admin/', admin.site.urls),
 ]
