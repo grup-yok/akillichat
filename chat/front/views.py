@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpRequest, JsonResponse
 import nltk, string
 import nltk.corpus
+import urllib
 from nltk.tokenize import word_tokenize, sent_tokenize, SpaceTokenizer
 from nltk import pos_tag, ne_chunk
 #from nltk.probability import FreqDist
@@ -14,6 +15,7 @@ from front.models import Request as req
 from front.models import Response as res
 from front.models import Dictionary as dic
 from googlesearch import search
+from bs4 import BeautifulSoup
 
 # Create your views here.
 def index(request):
@@ -49,6 +51,15 @@ def messageReceive(request):
 
     if response == "":
         response = googleSearch(message)
+
+        for s in response:
+            page = urllib.urlopen(s)
+            soup = BeautifulSoup(page, "html.parser")
+            title = soup.find_all("title")
+            title_get = title[0].contents[0].strip()
+            rat = fuzz.token_set_ratio(title_get, message)
+            if rat >= 40:
+                response = title_get
 
     
     return JsonResponse({
