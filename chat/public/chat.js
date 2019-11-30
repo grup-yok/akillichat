@@ -13,10 +13,13 @@ $(document).ready(function(){
         }
     });
 
+    var messages = $('.messages');
+
+    messages.append('<div class="message-info p-2">Kafanıza takılan sorular varsa bana sorabilirsiniz. </div>');
 
     window.sendMessage = function(){
-        var usertmp = $('<div class="message message-user"></div>');
-        var bottmp = $('<div class="message message-bot"></div>');
+        var usertmp = $('<div class="message message-user p-2"></div>');
+        var bottmp = $('<div class="message message-bot p-2"></div>');
 
         var messages = $('.messages');
         var question = $('#question');
@@ -28,6 +31,9 @@ $(document).ready(function(){
             usertmp.html("<span class='bold text-danger'>Soru: </span>"+question.val());
             messages.append(usertmp);
         }
+
+        bottmp.html("<span class='bold text-success'>Bomba atıyorum.....</span>");
+        messages.append(bottmp);
 
         window.sendMessageToBackend(question.val(), function(data){
             if(data){

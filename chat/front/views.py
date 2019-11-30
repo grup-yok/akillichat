@@ -53,14 +53,16 @@ def messageReceive(request):
     if response == error:
         response = googleSearch(message)
 
-        page = urllib.urlopen(response[0])
-        soup = BeautifulSoup(page, "html.parser")
-        title = soup.find_all("title")
-        if title:
-            title_get = title[0].contents[0].strip()
-            rat = fuzz.token_set_ratio(title_get, message)
-            if rat >= 40:
-                response = title_get
+        if response:
+            for result in response:
+                page = urllib.urlopen(result)
+                soup = BeautifulSoup(page, "html.parser")
+                title = soup.find_all("title")
+                if title and title[0].contents:
+                    title_get = title[0].contents[0].strip()
+                    rat = fuzz.token_set_ratio(title_get, message)
+                    if rat >= 40:
+                        response = "Sorunun cevabı burada olabilir: <br> <a href='"+result+"'>"+title_get+"<a/>"
 
     
     return JsonResponse({

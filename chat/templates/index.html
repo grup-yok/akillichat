@@ -7,19 +7,27 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Akıllı Chat Uygulaması!</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" integrity="sha256-46qynGAkLSFpVbEBog43gvNhfrOj+BmwXdxFgVK/Kvc=" crossorigin="anonymous" />
     <link rel="stylesheet" href="{% static 'chat.css' %}">
 </head>
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 mt-4">
                 {% csrf_token %}
                 <div class="messages"></div>
-                <div class="input-group">
-                    <input type="text" class="form-control" id="question" placeholder="Sorunuzu girin?">
-                    <button type="button" class="form-control" onclick="sendMessage()">Gönder</button>
-                    <button type="button" class="form-control" onclick="textToSpeech().start()">Mic Başlat</button>
-                    <button type="button" class="form-control" onclick="textToSpeech().stop()">Mic Durdur</button>
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <button type="button" class="btn btn-primary" onclick="textToSpeech().start()"><i class="fa fa-microphone"></i></button>
+                        </div>
+                        <div class="input-group-prepend">
+                            <button type="button" class="btn btn-primary" onclick="textToSpeech().stop()"><i class="fa fa-microphone-alt-slash"></i></button>
+                        </div>
+                        <input type="text" class="form-control" id="question" placeholder="Size hangi konuda yardım edebilirim ?">
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-primary" onclick="sendMessage()"><i class="fa fa-paper-plane"></i></button>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
