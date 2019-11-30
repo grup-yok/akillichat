@@ -34,7 +34,8 @@ def messageReceive(request):
     #chunked_nes = ne_chunk(pos) 
     #nes = [' '.join(map(lambda x: x[0], ne.leaves())) for ne in chunked_nes if isinstance(ne, nltk.tree.Tree)]
 
-    response = ""
+    error = "Balıkları una bulamadım... ><(((*>"
+    response = error
 
     for word in AI_tokens:
         findDic = dic.objects.filter(word__contains=word)
@@ -49,16 +50,17 @@ def messageReceive(request):
             if rat >= 90:
                 response = x.text
 
-    if response == "":
+    if response == error:
         response = googleSearch(message)
 
         page = urllib.urlopen(response[0])
         soup = BeautifulSoup(page, "html.parser")
         title = soup.find_all("title")
-        title_get = title[0].contents[0].strip()
-        rat = fuzz.token_set_ratio(title_get, message)
-        if rat >= 40:
-            response = title_get
+        if title:
+            title_get = title[0].contents[0].strip()
+            rat = fuzz.token_set_ratio(title_get, message)
+            if rat >= 40:
+                response = title_get
 
     
     return JsonResponse({
