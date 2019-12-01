@@ -9,7 +9,7 @@ import urllib
 from nltk.tokenize import word_tokenize, sent_tokenize, SpaceTokenizer
 from nltk import pos_tag, ne_chunk
 #from nltk.probability import FreqDist
-from nltk.util import bigrams, trigrams, ngrams
+#from nltk.util import bigrams, trigrams, ngrams
 from fuzzywuzzy import fuzz
 from front.models import Request as req
 from front.models import Response as res
@@ -34,7 +34,7 @@ def messageReceive(request):
     #chunked_nes = ne_chunk(pos) 
     #nes = [' '.join(map(lambda x: x[0], ne.leaves())) for ne in chunked_nes if isinstance(ne, nltk.tree.Tree)]
 
-    error = "Balıkları una bulamadım... ><(((*>"
+    error = "Bulamadım!... ><(((*>"
     response = error
 
     for word in AI_tokens:

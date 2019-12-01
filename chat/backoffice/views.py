@@ -5,8 +5,15 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpRequest
 
 # Create your views here.
-def index(response):
-    return HttpResponse('test')
+def index(request):
+    return render(request, 'dashboard.html', {})
 
-def add(response):
-    return HttpResponse('response')
+def add(request):
+    return render(request, 'add.html', {})
+
+def update(request):
+    return render(request, 'update.html', {})
+
+
+def ajax(request):
+    return JsonResponse({})
