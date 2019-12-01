@@ -45,10 +45,29 @@
                   <input type="text" id="cevap" class="form-control" >
               </div>
                 <button class="btn btn-lg btn-primary btn-block" onclick="veriekle()">EKLE</button>
-            <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
+            
+                <div class="row">
+                    <div class="col-md-12">
+                            <table class="table fetch-datas">
+                                <thead>
+                                    <tr>
+                                    <th scope="col">Soru</th>
+                                    </tr>
+                                    {% for x in data %}
+                                        <tr>
+                                            <td>{{ x.text }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </thead>
+                                <tbody class="results"></tbody>
+                            </table>
+                    </div>
+                </div>
           </main>
         </div>
+        
       </div>
+      
       {% csrf_token %}
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

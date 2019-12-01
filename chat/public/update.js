@@ -14,11 +14,11 @@ $(document).ready(function(){
     });
 
 
-    window.sendData = function(data, success){
+    window.sendData = function(data, url, success){
         $.ajax({
             type: 'POST',
             data: data,
-            url: '/office/ajax/',
+            url: '/office/'+url+'/',
             success: success
         });
 
@@ -30,7 +30,7 @@ $(document).ready(function(){
         window.sendData({
             soru:soru.val(),
             cevap:cevap.val()}, 
+            'ajax',
             function(data){});
     }
-
 });

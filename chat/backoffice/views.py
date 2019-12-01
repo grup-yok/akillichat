@@ -5,13 +5,16 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpRequest, JsonResponse
 from front.models import Request as req
 from front.models import Response as res
+from django.core import serializers
 
 # Create your views here.
 def index(request):
-    return render(request, 'dashboard.html', {})
+    addedData = req.objects.all()
+    return render(request, 'dashboard.html', {'data': addedData})
 
 def add(request):
-    return render(request, 'add.html', {})
+    addedData = req.objects.all()
+    return render(request, 'add.html', {'data': addedData})
 
 def update(request):
     return render(request, 'update.html', {})

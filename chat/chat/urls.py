@@ -20,7 +20,7 @@ from backoffice import views as BackOffice
 
 urlpatterns = [
     url(r'^$', Front.index, name="home"),
-    #url(r'^office/', BackOffice.index, name="backoffice"),
+    url(r'^office/', BackOffice.index, name="backoffice"),
     url(r'^office/add', BackOffice.add, name="backofficeadd"),
     url(r'^office/update', BackOffice.update, name="backofficeupdate"),
     url(r'^office/ajax', BackOffice.ajax, name="backofficeajax"),
