@@ -23,16 +23,14 @@ $(document).ready(function(){
         });
 
     };
-    window.veriekle = function(data,success){
+    window.veriekle = function(){
         var soru = $('#soru');
         var cevap = $('#cevap');
 
         window.sendData({
             soru:soru.val(),
             cevap:cevap.val()}, 
-            function(data){
-
-        });
+            function(data){});
     }
 
 });

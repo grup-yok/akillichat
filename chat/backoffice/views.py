@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render
-from django.http import HttpResponse, HttpRequest
+from django.http import HttpResponse, HttpRequest, JsonResponse
 from front.models import Request as req
 from front.models import Response as res
 
@@ -22,9 +22,9 @@ def ajax(request):
     sr=req.objects.create(text=soru)
     sr.save()
     cevap=request.POST.get('cevap')
-    cvp=res.objects.create(text=cevap,id=sr.id)
+    cvp=res.objects.create(text=cevap,request_id=sr.id)
     cvp.save()
     return JsonResponse({
-        'soru':sr,
-        'cevap':cvp,
+        "soru":sr.id,
+        "cevap":cvp.id,
     })
