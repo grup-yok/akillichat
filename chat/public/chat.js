@@ -4,6 +4,10 @@ $(document).ready(function(){
     var bottmp = '<div class="message message-bot p-2"></div>';
     var messages = $('.messages');
     var question = $('#question');
+    var micOpen = 'fa-microphone';
+    var micClose = 'fa-microphone-alt-slash';
+
+    var mic = false;
 
     function csrfSafeMethod(method) {
         // these HTTP methods do not require CSRF protection
@@ -38,6 +42,20 @@ $(document).ready(function(){
 
         question.val('');
     };
+
+    window.micOpenClose = function(){
+        if(!mic){
+            $('.btn-mic').find('i').removeClass(micOpen);
+            $('.btn-mic').find('i').addClass(micClose);
+            window.textToSpeech().start();
+            mic = true;
+        }else{
+            $('.btn-mic').find('i').removeClass(micClose);
+            $('.btn-mic').find('i').addClass(micOpen);
+            window.textToSpeech().stop();
+            mic = false;
+        }
+    }
 
     
 
