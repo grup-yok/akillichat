@@ -1,5 +1,8 @@
 $(document).ready(function(){
     var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+    var usertmp = $('<div class="message message-user p-2"></div>');
+    var bottmp = $('<div class="message message-bot p-2"></div>');
+    var messages = $('.messages');
 
     function csrfSafeMethod(method) {
         // these HTTP methods do not require CSRF protection
@@ -10,30 +13,24 @@ $(document).ready(function(){
             if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
                 xhr.setRequestHeader("X-CSRFToken", csrftoken);
             }
+            bottmp.html("<span class='bold text-success' id='loading'>Bir bomba attım güme gitti... Çok komik değil mi?... Bekle birazdan patlar...</span>");
+            messages.append(bottmp);
+        },
+        complete:function(){
+            $("#loading").remove();
         }
     });
 
-    var messages = $('.messages');
-
-    messages.append('<div class="message-info p-2">Kafanıza takılan sorular varsa bana sorabilirsiniz. </div>');
+    messages.append('<div class="message-info p-2 text-info">Kafanıza takılan sorular varsa bana sorabilirsiniz. </div>');
 
     window.sendMessage = function(){
-        var usertmp = $('<div class="message message-user p-2"></div>');
-        var bottmp = $('<div class="message message-bot p-2"></div>');
-
         var messages = $('.messages');
         var question = $('#question');
-
-        
-
 
         if(question.val() !== undefined){    
             usertmp.html("<span class='bold text-danger'>Soru: </span>"+question.val());
             messages.append(usertmp);
         }
-
-        bottmp.html("<span class='bold text-success'>Bomba atıyorum.....</span>");
-        messages.append(bottmp);
 
         window.sendMessageToBackend(question.val(), function(data){
             if(data){
@@ -120,6 +117,38 @@ $(document).ready(function(){
         }
         return true;
     };
+    
+
+    /* I give up!
+    window.takeInput = function(options){ 
+        var buttonTmp = $('<button class="" onclick=""></button>');
+        var inputTmp = $('<input class="form-control" placeholder="" id="" class=""/>');
+        var takeInput = $('<span class="question"></span> <span class="content"></span>');
+        var bottmp = $('<div class="message message-bot p-2"></div>');
+        var opt = $.extend({
+            'type': 'input',
+            'buttons': {
+                "yes": function(){},
+                "no": function(){},
+            },
+            'question': "",
+        }, options);
+
+        switch (opt["type"]) {
+            case "input":
+                inputTmp.addClass('take-input');
+                takeInput.find(".question").html(opt['question']);
+                takeInput.find(".content").html(inputTmp.html());
+                takeInput.find()
+
+                break;
+            case "button":
+                
+            default:
+                break;
+        }
+    };
+    */
 
     $('#question').on('keypress', window.checkKey);
 });
