@@ -14,10 +14,11 @@ $(document).ready(function(){
             if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
                 xhr.setRequestHeader("X-CSRFToken", csrftoken);
             }
-            newBottmp = $(bottmp).html("<span class='bold text-success' id='loading'>Bir bomba attım güme gitti... Çok komik değil mi?... Bekle birazdan patlar...</span>");
+            newBottmp = $(bottmp).html("<span class='bold text-success' id='loading'> Ne dediğini anlamadım. Sorgu internette aranıyor... Sonuçlar kayıt edilecek... </span>");
             messages.append(newBottmp);
         },
         complete:function(){
+            $('.messages').scrollTop($('.messages')[0].scrollHeight);
             $("#loading").remove();
         }
     });

@@ -38,22 +38,21 @@ def messageReceive(request):
     response = error
 
     sr=req.objects.create(text=message)
-    sr.save()
-    
-
-    findreq = req.objects.filter(text__contains=message)
-    for x in findreq:
-        resq = res.objects.filter(request_id=x.id)
-        for z in resq:
-            response = z.text        
+    sr.save()      
 
     for word in AI_tokens:
         findDic = dic.objects.filter(word__contains=word)
         if len(findDic) <= 0:
             wrd = dic.objects.create(word=prounancationFixer(word))
             wrd.save()
+        
+        findreq = req.objects.filter(text__contains=word)
+        for x in findreq:
+            resq = res.objects.filter(request_id=x.id)
+            for z in resq:
+                response = z.text  
 
-    if response == error:
+    if response == error or response == "[]" or response == "":
         response = googleSearch(message)
 
         if response:
