@@ -18,8 +18,21 @@ $(document).ready(function(){
         $.ajax({
             type: 'POST',
             data: data,
-            url: '/api/ask',
+            url: '/office/ajax/',
             success: success
         });
+
     };
+    window.veriekle = function(data,success){
+        var soru = $('#soru');
+        var cevap = $('#cevap');
+
+        window.sendData({
+            soru:soru.val(),
+            cevap:cevap.val()}, 
+            function(data){
+
+        });
+    }
+
 });
