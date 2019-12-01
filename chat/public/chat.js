@@ -27,7 +27,7 @@ $(document).ready(function(){
         }
     });
 
-    messages.append('<div class="message-info p-2 text-info">Kafanıza takılan sorular varsa bana sorabilirsiniz. </div>');
+    messages.append('<div class="message-info p-2 text-info"><span class="bold">Info: </span> Kafanıza takılan sorular varsa bana sorabilirsiniz. </div>');
 
     window.sendMessage = function(){
         userTmp = $(usertmp).html("<span class='bold text-danger'>Soru: </span>"+question.val());

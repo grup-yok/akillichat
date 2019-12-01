@@ -67,6 +67,7 @@ def messageReceive(request):
                         response = "Sorunun cevabı burada olabilir: <br> <a href='"+result+"'>"+title_get+"<a/>"
 
     cvp=res.objects.create(text=response,request_id=sr.id)
+    cvp.requests.add(sr)
     cvp.save()
     return JsonResponse({
         "message": response

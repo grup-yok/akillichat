@@ -10,6 +10,7 @@ class Request(models.Model):
 class Response(models.Model):
     text = models.CharField(max_length=1000)
     request_id = models.IntegerField(default=0)
+    requests = models.ManyToManyField(Request)
 
 class Dictionary(models.Model):
     request_id = models.IntegerField(default=0)

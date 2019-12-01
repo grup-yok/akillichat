@@ -31,6 +31,8 @@ $(document).ready(function(){
             soru:soru.val(),
             cevap:cevap.val()}, 
             'ajax',
-            function(data){});
+            function(data){
+                location.reload();
+            });
     }
 });

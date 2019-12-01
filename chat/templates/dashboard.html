@@ -21,7 +21,7 @@
               <ul class="nav flex-column">
                 <li class="nav-item">
                 </br>
-                  <a class="nav-link active" href="#">
+                  <a class="nav-link active" href="/office/add">
                     <span data-feather="home"></span>
                     VERİ EKLE<span class="sr-only">(current)</span>
                   </a>
@@ -30,22 +30,22 @@
             </div>
           </nav>
       
-          <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+          <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 mt-2">
               <div class="row">
                   <div class="col-md-12">
-                          <table class="table fetch-datas">
-                              <thead>
-                                  <tr>
-                                  <th scope="col">Soru</th>
-                                  </tr>
-                                  {% for x in data %}
-                                      <tr>
-                                          <td>{{ x.text }}</td>
-                                      </tr>
-                                  {% endfor %}
-                              </thead>
-                              <tbody class="results"></tbody>
-                          </table>
+                        <table class="table fetch-datas">
+                            <thead>
+                                <tr>
+                                <th scope="col">Soru</th>
+                                </tr>
+                                {% for x in data %}
+                                    <tr>
+                                        <td>{{ x.text }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </thead>
+                            <tbody class="results"></tbody>
+                        </table>
                   </div>
               </div>
           </main>

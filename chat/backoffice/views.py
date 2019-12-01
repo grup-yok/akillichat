@@ -9,11 +9,11 @@ from django.core import serializers
 
 # Create your views here.
 def index(request):
-    addedData = req.objects.all()
+    addedData = req.objects.all().order_by('-id')[:10]
     return render(request, 'dashboard.html', {'data': addedData})
 
 def add(request):
-    addedData = req.objects.all()
+    addedData = req.objects.all().order_by('-id')[:10]
     return render(request, 'add.html', {'data': addedData})
 
 def update(request):
@@ -26,7 +26,9 @@ def ajax(request):
     sr.save()
     cevap=request.POST.get('cevap')
     cvp=res.objects.create(text=cevap,request_id=sr.id)
+    cvp.requests.add(sr)
     cvp.save()
+    
     return JsonResponse({
         "soru":sr.id,
         "cevap":cvp.id,
