@@ -37,18 +37,21 @@ def messageReceive(request):
     error = "Bulamadım!... ><(((*>"
     response = error
 
+    sr=req.objects.create(text=message)
+    sr.save()
+    
+
+    findreq = req.objects.filter(text__contains=message)
+    for x in findreq:
+        resq = res.objects.filter(request_id=x.id)
+        for z in resq:
+            response = z.text        
+
     for word in AI_tokens:
         findDic = dic.objects.filter(word__contains=word)
         if len(findDic) <= 0:
             wrd = dic.objects.create(word=prounancationFixer(word))
             wrd.save()
-        
-
-        findreq = res.objects.filter(text__contains=word)
-        for x in findreq:
-            rat = fuzz.token_set_ratio(x.text, word)
-            if rat >= 90:
-                response = x.text
 
     if response == error:
         response = googleSearch(message)
@@ -64,7 +67,8 @@ def messageReceive(request):
                     if rat >= 40:
                         response = "Sorunun cevabı burada olabilir: <br> <a href='"+result+"'>"+title_get+"<a/>"
 
-    
+    cvp=res.objects.create(text=response,request_id=sr.id)
+    cvp.save()
     return JsonResponse({
         "message": response
     })

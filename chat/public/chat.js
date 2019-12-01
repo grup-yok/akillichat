@@ -1,8 +1,9 @@
 $(document).ready(function(){
     var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
-    var usertmp = $('<div class="message message-user p-2"></div>');
-    var bottmp = $('<div class="message message-bot p-2"></div>');
+    var usertmp = '<div class="message message-user p-2"></div>';
+    var bottmp = '<div class="message message-bot p-2"></div>';
     var messages = $('.messages');
+    var question = $('#question');
 
     function csrfSafeMethod(method) {
         // these HTTP methods do not require CSRF protection
@@ -13,8 +14,8 @@ $(document).ready(function(){
             if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
                 xhr.setRequestHeader("X-CSRFToken", csrftoken);
             }
-            bottmp.html("<span class='bold text-success' id='loading'>Bir bomba attım güme gitti... Çok komik değil mi?... Bekle birazdan patlar...</span>");
-            messages.append(bottmp);
+            newBottmp = $(bottmp).html("<span class='bold text-success' id='loading'>Bir bomba attım güme gitti... Çok komik değil mi?... Bekle birazdan patlar...</span>");
+            messages.append(newBottmp);
         },
         complete:function(){
             $("#loading").remove();
@@ -24,18 +25,13 @@ $(document).ready(function(){
     messages.append('<div class="message-info p-2 text-info">Kafanıza takılan sorular varsa bana sorabilirsiniz. </div>');
 
     window.sendMessage = function(){
-        var messages = $('.messages');
-        var question = $('#question');
-
-        if(question.val() !== undefined){    
-            usertmp.html("<span class='bold text-danger'>Soru: </span>"+question.val());
-            messages.append(usertmp);
-        }
+        userTmp = $(usertmp).html("<span class='bold text-danger'>Soru: </span>"+question.val());
+        messages.append(userTmp);
 
         window.sendMessageToBackend(question.val(), function(data){
             if(data){
-                bottmp.html("<span class='bold text-success'>Cevap: </span>"+data.message);
-                messages.append(bottmp);
+                botTmp = $(bottmp).html("<span class='bold text-success'>Cevap: </span>"+data.message);
+                messages.append(botTmp);
             }
         });
 
@@ -101,6 +97,7 @@ $(document).ready(function(){
 
             
             $('#question').val(noteContent);
+            window.sendMessage();
         }
 
         recognition.onstop = function(){
@@ -113,9 +110,7 @@ $(document).ready(function(){
     window.checkKey = function (event) {
         if (event.which == 13 || event.keyCode == 13) {
             window.sendMessage();
-            return false;
         }
-        return true;
     };
     
 
